@@ -1,0 +1,78 @@
+<div class="employeurs-container">
+  @if (isLoading) {
+    <div class="loading">Loading employers...</div>
+  }
+
+  @if (errorMessage) {
+    <div class="error-message">{{ errorMessage }}</div>
+  }
+
+  <div class="controls-container">
+    <div class="search-container">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        placeholder="Rechercher employeur..."
+      >
+      <span class="material-icons">search</span>
+    </div>
+
+    <div class="sort-container">
+      <button class="btn-sort" (click)="toggleSort()">
+        <span class="material-icons">
+          {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+        </span>
+        Trier {{ sortDirection === 'asc' ? 'A-Z' : 'Z-A' }}
+      </button>
+    </div>
+
+    <button class="btn-add" (click)="openAddForm()">
+      <span class="material-icons">add</span>
+      Ajouter Employeur
+    </button>
+  </div>
+
+  <h2>Employeurs</h2>
+  @if (!isLoading && filteredEmployeurs.length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (employeur of paginatedEmployeurs; track employeur.id) {
+          <tr>
+            <td>{{ employeur.id }}</td>
+            <td>{{ employeur.nomEmployeur }}</td>
+            <td>
+              <button class="btn-edit" (click)="openEditForm(employeur)" title="Modifier">
+                <span class="material-icons">edit</span>
+              </button>
+              <button class="btn-delete" (click)="deleteEmployeur(employeur)" title="Supprimer">
+                <span class="material-icons">delete</span>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="pagination-controls">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+        <span class="material-icons">chevron_left</span>
+      </button>
+      <span>{{ currentPage }}</span>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+        <span class="material-icons">chevron_right</span>
+      </button>
+    </div>
+  }
+
+  @if (!isLoading && filteredEmployeurs.length === 0) {
+    <div class="no-employeurs">Aucun employeur trouvé</div>
+  }
+</div>

@@ -1,0 +1,89 @@
+<div class="trainers-container">
+    <h1>Trainers</h1>
+  
+    @if (errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    }
+  
+    <div class="controls-container">
+      <div class="search-container">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()"
+          placeholder="Rechercher trainer..."
+        >
+        <span class="material-icons">search</span>
+      </div>
+  
+      <button class="btn-sort" (click)="toggleSort()">
+        <span class="material-icons">
+          {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+        </span>
+        Trier {{ sortDirection === 'asc' ? 'A-Z' : 'Z-A' }}
+      </button>
+  
+      <button class="btn-add" (click)="openAddForm()">
+        <span class="material-icons">add</span>
+        Ajouter Trainer
+      </button>
+    </div>
+  
+    @if (isLoading) {
+      <div class="loading">Chargement des trainers...</div>
+    }
+  
+    @if (!isLoading && filteredTrainers.length > 0) {
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Type</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (trainer of paginatedTrainers; track trainer.id) {
+            <tr>
+              <td>{{ trainer.id }}</td>
+              <td>{{ trainer.nom }}</td>
+              <td>{{ trainer.prenom }}</td>
+              <td>{{ trainer.email }}</td>
+              <td>{{ trainer.tel }}</td>
+              <td>
+                <span [class]="'type-' + trainer.type">
+                  {{ trainer.type }}
+                </span>
+              </td>
+              <td class="actions-cell">
+                <button class="btn-edit" (click)="openEditForm(trainer)" title="Modifier">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="btn-delete" (click)="deleteTrainer(trainer)" title="Supprimer">
+                  <span class="material-icons">delete</span>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+  
+      <div class="pagination-controls">
+        <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+          <span class="material-icons">chevron_left</span>
+        </button>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+        <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+    }
+  
+    @if (!isLoading && filteredTrainers.length === 0) {
+      <div class="no-trainers">Aucun trainer trouvé</div>
+    }
+  </div>

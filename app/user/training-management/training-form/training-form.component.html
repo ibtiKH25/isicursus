@@ -1,0 +1,132 @@
+<div class="form-container">
+    <div class="form-column">
+      <div class="form-content">
+        <div class="header-section">
+          <h1 class="company-name">{{ isEditMode ? 'Modifier Formation' : 'Ajouter Formation' }}</h1>
+          <div class="divider"></div>
+        </div>
+  
+        @if (errorMessage) {
+          <div class="error-message">
+            {{ errorMessage }}
+          </div>
+        }
+  
+        <form [formGroup]="trainingForm" (ngSubmit)="onSubmit()" class="login-form">
+          <div class="form-group">
+            <label for="titre">Titre</label>
+            <input
+              type="text"
+              id="titre"
+              formControlName="titre"
+              placeholder="Titre de la formation"
+              [class.invalid]="trainingForm.get('titre')?.invalid && trainingForm.get('titre')?.touched">
+  
+            @if (trainingForm.get('titre')?.touched && trainingForm.get('titre')?.invalid) {
+              <div class="validation-error">
+                @if (trainingForm.get('titre')?.errors?.['required']) {
+                  <div>⚠️ Le titre est requis</div>
+                }
+                @if (trainingForm.get('titre')?.errors?.['minlength']) {
+                  <div>⚠️ Minimum 3 caractères requis</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-group">
+            <label for="annee">Année</label>
+            <input
+              type="number"
+              id="annee"
+              formControlName="annee"
+              [class.invalid]="trainingForm.get('annee')?.invalid && trainingForm.get('annee')?.touched">
+  
+            @if (trainingForm.get('annee')?.touched && trainingForm.get('annee')?.invalid) {
+              <div class="validation-error">
+                @if (trainingForm.get('annee')?.errors?.['required']) {
+                  <div>⚠️ L'année est requise</div>
+                }
+                @if (trainingForm.get('annee')?.errors?.['min'] || trainingForm.get('annee')?.errors?.['max']) {
+                  <div>⚠️ Doit être entre 2020 et 2030</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-group">
+            <label for="duree">Durée (jours)</label>
+            <input
+              type="number"
+              id="duree"
+              formControlName="duree"
+              [class.invalid]="trainingForm.get('duree')?.invalid && trainingForm.get('duree')?.touched">
+  
+            @if (trainingForm.get('duree')?.touched && trainingForm.get('duree')?.invalid) {
+              <div class="validation-error">
+                @if (trainingForm.get('duree')?.errors?.['required']) {
+                  <div>⚠️ La durée est requise</div>
+                }
+                @if (trainingForm.get('duree')?.errors?.['min']) {
+                  <div>⚠️ Doit être au moins 1 jour</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-group">
+            <label for="idDomaine">Domaine</label>
+            <select
+              id="idDomaine"
+              formControlName="idDomaine"
+              [class.invalid]="trainingForm.get('idDomaine')?.invalid && trainingForm.get('idDomaine')?.touched">
+              <option value="">Sélectionnez un domaine</option>
+              @for (domain of domains; track domain.id) {
+                <option [value]="domain.id">{{ domain.libelle }}</option>
+              }
+            </select>
+  
+            @if (trainingForm.get('idDomaine')?.touched && trainingForm.get('idDomaine')?.invalid) {
+              <div class="validation-error">
+                @if (trainingForm.get('idDomaine')?.errors?.['required']) {
+                  <div>⚠️ Le domaine est requis</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-group">
+            <label for="budget">Budget (€)</label>
+            <input
+              type="number"
+              step="0.01"
+              id="budget"
+              formControlName="budget"
+              [class.invalid]="trainingForm.get('budget')?.invalid && trainingForm.get('budget')?.touched">
+  
+            @if (trainingForm.get('budget')?.touched && trainingForm.get('budget')?.invalid) {
+              <div class="validation-error">
+                @if (trainingForm.get('budget')?.errors?.['required']) {
+                  <div>⚠️ Le budget est requis</div>
+                }
+                @if (trainingForm.get('budget')?.errors?.['min']) {
+                  <div>⚠️ Doit être positif</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="onCancel()">Annuler</button>
+            <button type="submit" class="submit-btn" [disabled]="!trainingForm.valid || isSubmitting">
+              @if (isSubmitting) {
+                <span>En cours...</span>
+              } @else {
+                <span>{{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

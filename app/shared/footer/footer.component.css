@@ -1,0 +1,46 @@
+.footer {
+  margin-top: auto;
+  width: 100%;
+  padding: 0;
+  color: white;
+}
+
+.footer.admin {
+  background-color: #007fe8;
+}
+
+.footer.manager {
+  background-color: #21c927;
+}
+
+.footer.user {
+  background-color: #f79400;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+}

@@ -1,0 +1,148 @@
+<div class="form-container">
+    <div class="form-column">
+      <div class="form-content">
+        <div class="header-section">
+          <h1 class="company-name">{{ isEditMode ? 'Modifier Trainer' : 'Ajouter Trainer' }}</h1>
+          <div class="divider"></div>
+        </div>
+  
+        @if (errorMessage) {
+          <div class="error-message">
+            {{ errorMessage }}
+          </div>
+        }
+  
+        <form [formGroup]="trainerForm" (ngSubmit)="onSubmit()" class="login-form">
+          <!-- Nom -->
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input
+              type="text"
+              id="nom"
+              formControlName="nom"
+              placeholder="Entrez le nom"
+              [class.invalid]="trainerForm.get('nom')?.invalid && trainerForm.get('nom')?.touched">
+  
+            @if (trainerForm.get('nom')?.touched && trainerForm.get('nom')?.invalid) {
+              <div class="validation-error">
+                @if (trainerForm.get('nom')?.errors?.['required']) {
+                  <div>⚠️ Le nom est requis</div>
+                }
+                @if (trainerForm.get('nom')?.errors?.['minLength']) {
+                  <div>⚠️ Minimum 2 caractères</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <!-- Prénom -->
+          <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input
+              type="text"
+              id="prenom"
+              formControlName="prenom"
+              placeholder="Entrez le prénom"
+              [class.invalid]="trainerForm.get('prenom')?.invalid && trainerForm.get('prenom')?.touched">
+  
+            @if (trainerForm.get('prenom')?.touched && trainerForm.get('prenom')?.invalid) {
+              <div class="validation-error">
+                @if (trainerForm.get('prenom')?.errors?.['required']) {
+                  <div>⚠️ Le prénom est requis</div>
+                }
+                @if (trainerForm.get('prenom')?.errors?.['minLength']) {
+                  <div>⚠️ Minimum 2 caractères</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="Entrez l'email"
+              [class.invalid]="trainerForm.get('email')?.invalid && trainerForm.get('email')?.touched">
+  
+            @if (trainerForm.get('email')?.touched && trainerForm.get('email')?.invalid) {
+              <div class="validation-error">
+                @if (trainerForm.get('email')?.errors?.['required']) {
+                  <div>⚠️ L'email est requis</div>
+                }
+                @if (trainerForm.get('email')?.errors?.['email']) {
+                  <div>⚠️ Format email invalide</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <!-- Téléphone -->
+          <div class="form-group">
+            <label for="tel">Téléphone</label>
+            <input
+              type="tel"
+              id="tel"
+              formControlName="tel"
+              placeholder="Entrez le téléphone"
+              [class.invalid]="trainerForm.get('tel')?.invalid && trainerForm.get('tel')?.touched">
+  
+            @if (trainerForm.get('tel')?.touched && trainerForm.get('tel')?.invalid) {
+              <div class="validation-error">
+                @if (trainerForm.get('tel')?.errors?.['required']) {
+                  <div>⚠️ Le téléphone est requis</div>
+                }
+                @if (trainerForm.get('tel')?.errors?.['pattern']) {
+                  <div>⚠️ 10 chiffres requis</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <!-- Type -->
+          <div class="form-group">
+            <label for="type">Type</label>
+            <select
+              id="type"
+              formControlName="type"
+              class="form-control">
+              <option value="interne">Interne</option>
+              <option value="externe">Externe</option>
+            </select>
+          </div>
+  
+          <!-- ID Employeur -->
+          <div class="form-group">
+            <label for="idEmployeur">ID Employeur</label>
+            <input
+              type="number"
+              id="idEmployeur"
+              formControlName="idEmployeur"
+              placeholder="Entrez l'ID employeur"
+              [class.invalid]="trainerForm.get('idEmployeur')?.invalid && trainerForm.get('idEmployeur')?.touched">
+  
+            @if (trainerForm.get('idEmployeur')?.touched && trainerForm.get('idEmployeur')?.invalid) {
+              <div class="validation-error">
+                @if (trainerForm.get('idEmployeur')?.errors?.['required']) {
+                  <div>⚠️ L'ID employeur est requis</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="onCancel()">Annuler</button>
+            <button type="submit" class="submit-btn" [disabled]="!trainerForm.valid || isSubmitting">
+              @if (isSubmitting) {
+                <span>En cours...</span>
+              } @else {
+                <span>{{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

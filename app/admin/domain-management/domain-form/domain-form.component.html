@@ -1,0 +1,52 @@
+<div class="form-container">
+  <div class="form-column">
+    <div class="form-content">
+      <div class="header-section">
+        <h1>{{ isEditMode ? 'Modifier Domaine' : 'Ajouter Domaine' }}</h1>
+        <div class="divider"></div>
+      </div>
+
+      @if (errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <form [formGroup]="domaineForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="libelle">Libellé du Domaine</label>
+          <input
+            type="text"
+            id="libelle"
+            formControlName="libelle"
+            placeholder="Ex: Informatique"
+            [class.invalid]="domaineForm.get('libelle')?.invalid && (domaineForm.get('libelle')?.touched || isSubmitting)">
+
+          @if (domaineForm.get('libelle')?.invalid && (domaineForm.get('libelle')?.touched || isSubmitting)) {
+            <div class="validation-error">
+              @if (domaineForm.get('libelle')?.errors?.['required']) {
+                <div>Le libellé est obligatoire</div>
+              }
+              @if (domaineForm.get('libelle')?.errors?.['minlength']) {
+                <div>3 caractères minimum requis</div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" (click)="onCancel()" [disabled]="isSubmitting">
+            Annuler
+          </button>
+          <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+            @if (isSubmitting) {
+              <span>Enregistrement...</span>
+            } @else {
+              <span>{{ isEditMode ? 'Mettre à jour' : 'Créer' }}</span>
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

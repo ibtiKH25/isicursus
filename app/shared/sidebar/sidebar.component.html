@@ -1,0 +1,73 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h3>Menu</h3>
+  </div>
+
+  <div class="sidebar-menu">
+    @if (currentRole === 'admin') {
+      <div class="menu-section">
+        <h4 class="section-title">Gestion</h4>
+        <button class="menu-item" (click)="navigateTo('users')">
+          <span class="material-icons">people</span>
+          Utilisateurs
+        </button>
+        <button class="menu-item" (click)="navigateTo('domains')">
+          <span class="material-icons">category</span>
+          Domaines
+        </button>
+        <button class="menu-item" (click)="navigateTo('profiles')">
+          <span class="material-icons">badge</span>
+          Profils
+        </button>
+        <button class="menu-item" (click)="navigateTo('structures')">
+          <span class="material-icons">business</span>
+          Structures
+        </button>
+        <button class="menu-item" (click)="navigateTo('employers')">
+          <span class="material-icons">work</span>
+          Employeurs
+        </button>
+      </div>
+    }
+
+    @if (currentRole === 'manager') {
+      <div class="menu-section">
+        <h4 class="section-title">Statistiques</h4>
+        <button class="menu-item" (click)="navigateTo('statistics')">
+          <span class="material-icons">bar_chart</span>
+          Tableau de bord
+        </button>
+      </div>
+    }
+
+    @if (currentRole === 'user') {
+      <div class="menu-section">
+        <h4 class="section-title">Formation</h4>
+        <button class="menu-item" (click)="navigateTo('trainers')">
+          <span class="material-icons">person</span>
+          Formateurs
+        </button>
+        <button class="menu-item" (click)="navigateTo('trainings')">
+          <span class="material-icons">school</span>
+          Formations
+        </button>
+        <button class="menu-item" (click)="navigateTo('participants')">
+          <span class="material-icons">groups</span>
+          Participants
+        </button>
+      </div>
+    }
+
+    <div class="menu-section">
+      <h4 class="section-title">Compte</h4>
+      <button class="menu-item" (click)="navigateTo('profile')">
+        <span class="material-icons">account_circle</span>
+        Profil
+      </button>
+      <button class="menu-item" (click)="navigateTo('/login')">
+        <span class="material-icons">logout</span>
+        Déconnexion
+      </button>
+    </div>
+  </div>
+</div>

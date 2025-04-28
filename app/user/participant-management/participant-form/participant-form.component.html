@@ -1,0 +1,147 @@
+<div class="form-container">
+    <div class="form-column">
+      <div class="form-content">
+        <div class="header-section">
+          <h1 class="company-name">{{ isEditMode ? 'Modifier Participant' : 'Ajouter Participant' }}</h1>
+          <div class="divider"></div>
+        </div>
+  
+        @if (errorMessage) {
+          <div class="error-message">
+            {{ errorMessage }}
+          </div>
+        }
+  
+        <form [formGroup]="participantForm" (ngSubmit)="onSubmit()" class="login-form">
+          <!-- Nom -->
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input
+              type="text"
+              id="nom"
+              formControlName="nom"
+              placeholder="Entrez le nom"
+              [class.invalid]="participantForm.get('nom')?.invalid && participantForm.get('nom')?.touched">
+  
+            @if (participantForm.get('nom')?.touched && participantForm.get('nom')?.invalid) {
+              <div class="validation-error">
+                @if (participantForm.get('nom')?.errors?.['required']) {
+                  <div>⚠️ Le nom est requis</div>
+                }
+                @if (participantForm.get('nom')?.errors?.['minlength']) {
+                  <div>⚠️ Minimum 2 caractères</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <!-- Prénom -->
+          <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input
+              type="text"
+              id="prenom"
+              formControlName="prenom"
+              placeholder="Entrez le prénom"
+              [class.invalid]="participantForm.get('prenom')?.invalid && participantForm.get('prenom')?.touched">
+  
+            @if (participantForm.get('prenom')?.touched && participantForm.get('prenom')?.invalid) {
+              <div class="validation-error">
+                @if (participantForm.get('prenom')?.errors?.['required']) {
+                  <div>⚠️ Le prénom est requis</div>
+                }
+                @if (participantForm.get('prenom')?.errors?.['minlength']) {
+                  <div>⚠️ Minimum 2 caractères</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <!-- Structure -->
+          <div class="form-group">
+            <label for="idStructure">Structure</label>
+            <select
+              id="idStructure"
+              formControlName="idStructure"
+              class="form-control"
+              [class.invalid]="participantForm.get('idStructure')?.invalid && participantForm.get('idStructure')?.touched">
+              <option value="">Sélectionnez une structure</option>
+              @for (structure of structures; track structure.id) {
+                <option [value]="structure.id">{{ structure.nom }}</option>
+              }
+            </select>
+          </div>
+  
+          <!-- Profil -->
+          <div class="form-group">
+            <label for="idProfil">Profil</label>
+            <select
+              id="idProfil"
+              formControlName="idProfil"
+              class="form-control"
+              [class.invalid]="participantForm.get('idProfil')?.invalid && participantForm.get('idProfil')?.touched">
+              <option value="">Sélectionnez un profil</option>
+              @for (profil of profils; track profil.id) {
+                <option [value]="profil.id">{{ profil.libelle }}</option>
+              }
+            </select>
+          </div>
+  
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="Entrez l'email"
+              [class.invalid]="participantForm.get('email')?.invalid && participantForm.get('email')?.touched">
+  
+            @if (participantForm.get('email')?.touched && participantForm.get('email')?.invalid) {
+              <div class="validation-error">
+                @if (participantForm.get('email')?.errors?.['required']) {
+                  <div>⚠️ L'email est requis</div>
+                }
+                @if (participantForm.get('email')?.errors?.['email']) {
+                  <div>⚠️ Format email invalide</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <!-- Téléphone -->
+          <div class="form-group">
+            <label for="tel">Téléphone</label>
+            <input
+              type="tel"
+              id="tel"
+              formControlName="tel"
+              placeholder="Entrez le téléphone"
+              [class.invalid]="participantForm.get('tel')?.invalid && participantForm.get('tel')?.touched">
+  
+            @if (participantForm.get('tel')?.touched && participantForm.get('tel')?.invalid) {
+              <div class="validation-error">
+                @if (participantForm.get('tel')?.errors?.['required']) {
+                  <div>⚠️ Le téléphone est requis</div>
+                }
+                @if (participantForm.get('tel')?.errors?.['pattern']) {
+                  <div>⚠️ 10 chiffres requis</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="onCancel()">Annuler</button>
+            <button type="submit" class="submit-btn" [disabled]="!participantForm.valid || isSubmitting">
+              @if (isSubmitting) {
+                <span>En cours...</span>
+              } @else {
+                <span>{{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

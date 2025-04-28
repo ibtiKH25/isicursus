@@ -1,0 +1,80 @@
+<div class="users-container">
+    @if (isLoading) {
+      <div class="loading">Chargement des utilisateurs...</div>
+    }
+  
+    @if (errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    }
+  
+    <div class="controls-container">
+      <div class="search-container">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()"
+          placeholder="Rechercher utilisateur..."
+        >
+        <span class="material-icons">search</span>
+      </div>
+  
+      <div class="sort-container">
+        <button class="btn-sort" (click)="toggleSort()">
+          <span class="material-icons">
+            {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+          </span>
+          Trier {{ sortDirection === 'asc' ? 'A-Z' : 'Z-A' }}
+        </button>
+      </div>
+  
+      <button class="btn-add" (click)="openAddForm()">
+        <span class="material-icons">add</span>
+        Ajouter Utilisateur
+      </button>
+    </div>
+  
+    <h2>Utilisateurs</h2>
+    @if (!isLoading && filteredUsers.length > 0) {
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of paginatedUsers; track user.id) {
+            <tr>
+              <td>{{ user.id }}</td>
+              <td>{{ user.login }}</td>
+              <td>{{ getRoleName(user.idRole) }}</td>
+              <td>
+                <button class="btn-edit" (click)="openEditForm(user)" title="Modifier">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="btn-delete" (click)="deleteUser(user)" title="Supprimer">
+                  <span class="material-icons">delete</span>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+  
+      <div class="pagination-controls">
+        <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+          <span class="material-icons">chevron_left</span>
+        </button>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+        <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+    }
+  
+    @if (!isLoading && filteredUsers.length === 0) {
+      <div class="no-users">Aucun utilisateur trouvé</div>
+    }
+  </div>

@@ -1,0 +1,17 @@
+<footer class="footer" [class.admin]="currentRole === 'admin'" [class.manager]="currentRole === 'manager'" [class.user]="currentRole === 'user'">
+  <div class="footer-content">
+    <div class="footer-section">
+      <p>Plateforme de gestion des formations</p>
+    </div>
+    <div class="footer-section">
+      <p>Shadha AMMAR</p>
+    </div>
+    <div class="footer-section">
+      <p>Ibtihel KHEMILI</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {{ currentYear }} ISICursus. Tous droits réservés.</p>
+  </div>
+</footer>

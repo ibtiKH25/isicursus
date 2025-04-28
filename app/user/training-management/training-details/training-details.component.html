@@ -1,0 +1,45 @@
+<div class="details-container">
+    @if (isLoading) {
+      <div class="loading">Chargement en cours...</div>
+    }
+  
+    @if (errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    }
+  
+    @if (training) {
+      <div class="details-card">
+        <h2>Détails de la Formation</h2>
+        
+        <div class="detail-item">
+          <span class="detail-label">Titre:</span>
+          <span class="detail-value">{{ training.titre }}</span>
+        </div>
+  
+        <div class="detail-item">
+          <span class="detail-label">Année:</span>
+          <span class="detail-value">{{ training.annee }}</span>
+        </div>
+  
+        <div class="detail-item">
+          <span class="detail-label">Durée:</span>
+          <span class="detail-value">{{ training.duree }} jours</span>
+        </div>
+  
+        <div class="detail-item">
+          <span class="detail-label">Domaine:</span>
+          <span class="detail-value">{{ training.domaine?.libelle || 'Non spécifié' }}</span>
+        </div>
+  
+        <div class="detail-item">
+          <span class="detail-label">Budget:</span>
+          <span class="detail-value">{{ training.budget | number:'1.2-2' }} €</span>
+        </div>
+  
+        <div class="actions">
+          <button class="btn-edit" (click)="editTraining()">Modifier</button>
+          <button class="btn-back" (click)="goBack()">Retour</button>
+        </div>
+      </div>
+    }
+  </div>

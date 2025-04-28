@@ -1,0 +1,64 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<nav class="navbar" [class.admin]="currentRole === 'admin'" [class.manager]="currentRole === 'manager'" [class.user]="currentRole === 'user'">
+  <div class="navbar-brand">
+    <img src="assets/images/Navbar.jpg" alt="ISICursus Logo" class="logo">
+  </div>
+
+  <div class="navbar-links">
+    @if (currentRole === 'admin') {
+      <button class="nav-link" (click)="navigateTo('dashboard')">
+        <span class="material-icons">dashboard</span>
+        Dashboard
+      </button>
+      <button class="nav-link" (click)="navigateTo('users')">
+        <span class="material-icons">manage_accounts</span>
+        Utilisateurs
+      </button>
+      <button class="nav-link" (click)="navigateTo('domains')">
+        <span class="material-icons">public</span>
+        Domaines
+      </button>
+      <button class="nav-link" (click)="navigateTo('profile')">
+        <span class="material-icons">person_pin</span>
+        Profil
+      </button>
+      <button class="nav-link" (click)="navigateTo('structure')">
+        <span class="material-icons">corporate_fare</span>
+        Structure
+      </button>
+      <button class="nav-link" (click)="navigateTo('employer')">
+        <span class="material-icons">business_center</span>
+        Employeur
+      </button>
+    }
+
+    @if (currentRole === 'manager') {
+      <button class="nav-link" (click)="navigateTo('statistics')">
+        <span class="material-icons">insights</span>
+        Statistiques
+      </button>
+    }
+
+    @if (currentRole === 'user') {
+      <button class="nav-link" (click)="navigateTo('trainers')">
+        <span class="material-icons">record_voice_over</span>
+        Formateurs
+      </button>
+
+      <button class="nav-link" (click)="navigateTo('participants')">
+        <span class="material-icons">group_work</span>
+        Participants
+      </button>
+    }
+  </div>
+
+  <div class="navbar-user">
+    <div class="user-info">
+      <span class="material-icons">account_circle</span>
+      <span class="username">{{ currentRole | titlecase }}</span>
+    </div>
+    <button class="logout-btn" (click)="router.navigate(['/login'])">
+      <span class="material-icons">logout</span>
+    </button>
+  </div>
+</nav>

@@ -1,0 +1,213 @@
+/* ===== BASE STYLES ===== */
+.trainers-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+/* ===== CONTROLS ===== */
+.controls-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.search-container {
+    position: relative;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.search-container .material-icons {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7f8c8d;
+}
+
+/* ===== BUTTONS ===== */
+.btn-add, .btn-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-add {
+    background-color: #8e44ad; /* Violet pour correspondre au thème */
+    color: white;
+    border: none;
+}
+
+.btn-add:hover {
+    background-color: #7d3c98;
+}
+
+.btn-sort {
+    background-color: white;
+    border: 1px solid #ddd;
+    color: #2c3e50;
+}
+
+.btn-sort:hover {
+    border-color: #8e44ad;
+    color: #8e44ad;
+}
+
+/* ===== TABLE ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+th {
+    background-color: #8e44ad; /* Violet pour correspondre au thème */
+    color: white;
+    font-weight: 500;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* ===== TYPE BADGES ===== */
+.type-interne {
+    color: #27ae60;
+    background-color: #e8f5e9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    display: inline-block;
+}
+
+.type-externe {
+    color: #e67e22;
+    background-color: #fef9e7;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    display: inline-block;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.actions-cell {
+    white-space: nowrap;
+}
+
+.btn-edit, .btn-delete {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.25rem;
+    transition: all 0.2s;
+}
+
+.btn-edit {
+    background-color: #8e44ad; /* Violet pour correspondre au thème */
+    color: white;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #7d3c98;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+
+/* ===== PAGINATION ===== */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.pagination-controls button {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+    background-color: #8e44ad; /* Violet pour correspondre au thème */
+    color: white;
+    border-color: #8e44ad;
+}
+
+.pagination-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== MESSAGES ===== */
+.loading, .no-trainers, .error-message {
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+}
+
+.loading {
+    background-color: #f8f9fa;
+    color: #7f8c8d;
+}
+
+.no-trainers {
+    background-color: #f8f9fa;
+    color: #7f8c8d;
+}
+
+.error-message {
+    background-color: #fdecea;
+    color: #e74c3c;
+    border-left: 4px solid #e74c3c;
+}
+
+/* ===== MATERIAL ICONS =*/

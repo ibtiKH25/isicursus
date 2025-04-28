@@ -1,0 +1,101 @@
+<div class="form-container">
+    <div class="form-column">
+      <div class="form-content">
+        <div class="header-section">
+          <h1 class="company-name">{{ isEditMode ? 'Modifier Utilisateur' : 'Ajouter Utilisateur' }}</h1>
+          <div class="divider"></div>
+        </div>
+  
+        @if (errorMessage) {
+          <div class="error-message">
+            {{ errorMessage }}
+          </div>
+        }
+  
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="login-form">
+          <div class="form-group">
+            <label for="login">Login</label>
+            <input
+              type="text"
+              id="login"
+              formControlName="login"
+              placeholder="Entrez le login"
+              [class.invalid]="userForm.get('login')?.invalid && userForm.get('login')?.touched">
+  
+            @if (userForm.get('login')?.touched && userForm.get('login')?.invalid) {
+              <div class="validation-error">
+                @if (userForm.get('login')?.errors?.['required']) {
+                  <div>⚠️ Le login est requis</div>
+                }
+                @if (userForm.get('login')?.errors?.['minlength']) {
+                  <div>⚠️ Minimum 3 caractères requis</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              placeholder="Entrez le mot de passe"
+              [class.invalid]="userForm.get('password')?.invalid && userForm.get('password')?.touched"
+              [attr.disabled]="isEditMode ? true : null">
+  
+            @if (userForm.get('password')?.touched && userForm.get('password')?.invalid) {
+              <div class="validation-error">
+                @if (userForm.get('password')?.errors?.['required']) {
+                  <div>⚠️ Le mot de passe est requis</div>
+                }
+                @if (userForm.get('password')?.errors?.['minlength']) {
+                  <div>⚠️ Minimum 6 caractères requis</div>
+                }
+              </div>
+            }
+            @if (isEditMode) {
+              <div class="info-message">
+                Laissez vide pour ne pas modifier le mot de passe
+              </div>
+            }
+          </div>
+  
+          <div class="form-group">
+            <label for="idRole">Rôle</label>
+            <select
+              id="idRole"
+              formControlName="idRole"
+              [class.invalid]="userForm.get('idRole')?.invalid && userForm.get('idRole')?.touched">
+              <option value="">Sélectionnez un rôle</option>
+              @for (role of roles; track role.id) {
+                <option [value]="role.id">{{ role.nom }}</option>
+              }
+            </select>
+  
+            @if (userForm.get('idRole')?.touched && userForm.get('idRole')?.invalid) {
+              <div class="validation-error">
+                @if (userForm.get('idRole')?.errors?.['required']) {
+                  <div>⚠️ Le rôle est requis</div>
+                }
+                @if (userForm.get('idRole')?.errors?.['pattern']) {
+                  <div>⚠️ Sélectionnez un rôle valide</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="onCancel()">Annuler</button>
+            <button type="submit" class="submit-btn" [disabled]="!userForm.valid || isSubmitting">
+              @if (isSubmitting) {
+                <span>En cours...</span>
+              } @else {
+                <span>{{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

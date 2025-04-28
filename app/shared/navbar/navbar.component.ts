@@ -1,0 +1,31 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+@Component({
+  selector: 'app-navbar',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
+})
+export class NavbarComponent {
+  constructor(public router: Router) {}
+
+  get currentRole(): string {
+    const url = this.router.url;
+    if (url.includes('admin')) return 'admin';
+    if (url.includes('manager')) return 'manager';
+    if (url.includes('user')) return 'user';
+    return '';
+  }
+
+  navigateTo(route: string): void {
+    this.router.navigate([`/${this.currentRole}/${route}`]);
+  }
+
+  isActive(route: string): boolean {
+    return this.router.url.includes(route);
+  }
+}

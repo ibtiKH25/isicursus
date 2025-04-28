@@ -1,0 +1,50 @@
+<div class="form-container">
+    <div class="form-column">
+      <div class="form-content">
+        <div class="header-section">
+          <h1 class="company-name">{{ isEditMode ? 'Modifier Profil' : 'Ajouter Profil' }}</h1>
+          <div class="divider"></div>
+        </div>
+  
+        @if (errorMessage) {
+          <div class="error-message">
+            {{ errorMessage }}
+          </div>
+        }
+  
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="login-form">
+          <div class="form-group">
+            <label for="libelle">Libellé du Profil</label>
+            <input
+              type="text"
+              id="libelle"
+              formControlName="libelle"
+              placeholder="Ex: Informaticien (bac + 5)"
+              [class.invalid]="profileForm.get('libelle')?.invalid && profileForm.get('libelle')?.touched">
+  
+            @if (profileForm.get('libelle')?.touched && profileForm.get('libelle')?.invalid) {
+              <div class="validation-error">
+                @if (profileForm.get('libelle')?.errors?.['required']) {
+                  <div>⚠️ Le libellé est requis</div>
+                }
+                @if (profileForm.get('libelle')?.errors?.['minlength']) {
+                  <div>⚠️ Minimum 3 caractères requis</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="onCancel()">Annuler</button>
+            <button type="submit" class="submit-btn" [disabled]="!profileForm.valid || isSubmitting">
+              @if (isSubmitting) {
+                <span>En cours...</span>
+              } @else {
+                <span>{{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

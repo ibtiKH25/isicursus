@@ -1,0 +1,75 @@
+<div class="domaines-container">
+  @if (isLoading) {
+    <div class="loading">Chargement des domaines...</div>
+  }
+
+  <div class="controls-container">
+    <div class="search-container">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        placeholder="Rechercher domaine..."
+      >
+      <span class="material-icons">search</span>
+    </div>
+
+    <div class="sort-container">
+      <button class="btn-sort" (click)="toggleSort()">
+        <span class="material-icons">
+          {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+        </span>
+        Trier {{ sortDirection === 'asc' ? 'A-Z' : 'Z-A' }}
+      </button>
+    </div>
+
+    <button class="btn-add" (click)="openAddForm()">
+      <span class="material-icons">add</span>
+      Ajouter Domaine
+    </button>
+  </div>
+
+  <h2>Domaines</h2>
+  
+  @if (!isLoading && filteredDomaines.length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Libellé</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (domaine of paginatedDomaines; track domaine.id) {
+          <tr>
+            <td>{{ domaine.id }}</td>
+            <td>{{ domaine.libelle }}</td>
+            <td>
+              <button class="btn-edit" (click)="openEditForm(domaine.id)" title="Modifier">
+                <span class="material-icons">edit</span>
+              </button>
+              <button class="btn-delete" (click)="deleteDomaine(domaine.id)" title="Supprimer">
+                <span class="material-icons">delete</span>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="pagination-controls">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+        <span class="material-icons">chevron_left</span>
+      </button>
+      <span>{{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+        <span class="material-icons">chevron_right</span>
+      </button>
+    </div>
+  }
+
+  @if (!isLoading && filteredDomaines.length === 0) {
+    <div class="no-data">Aucun domaine trouvé</div>
+  }
+</div>

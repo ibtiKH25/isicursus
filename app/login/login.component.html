@@ -1,0 +1,108 @@
+<div class="login-container">
+  <div class="login-row">
+    <!-- Colonne Image -->
+    <div class="image-column">
+      <img src="assets/images/logo.png" alt="Logo">
+    </div>
+    <!-- Colonne Formulaire -->
+    <div class="form-column">
+      <div class="form-content">
+        <div class="header-section">
+          <h1 class="company-name">ISICursus</h1>
+          <div class="divider"></div>
+        </div>
+
+        <h3 class="welcome-title">Veuillez sélectionner votre rôle</h3>
+        <div class="role-selection">
+          <button
+            type="button"
+            class="role-btn admin"
+            [class.selected]="selectedRole === 'admin'"
+            (click)="selectRole('admin')">
+            Administrateur
+          </button>
+          <button
+            type="button"
+            class="role-btn doctor"
+            [class.selected]="selectedRole === 'doctor'"
+            (click)="selectRole('doctor')">
+            Responsable
+          </button>
+          <button
+            type="button"
+            class="role-btn patient"
+            [class.selected]="selectedRole === 'patient'"
+            (click)="selectRole('patient')">
+            Utilisateur
+          </button>
+        </div>
+
+        @if (loginForm.touched && !selectedRole) {
+          <div class="role-error-message">
+            ⚠️ Veuillez sélectionner un rôle
+          </div>
+        }
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="exemple@domain.com"
+              [class.invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+
+            @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+              <div class="error-message">
+                @if (loginForm.get('email')?.errors?.['required']) {
+                  <div>⚠️ L'email est requis</div>
+                }
+                @if (loginForm.get('email')?.errors?.['email']) {
+                  <div>⚠️ Veuillez entrer un email valide</div>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <div class="password-container">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                formControlName="password"
+                placeholder="········"
+                [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+              <button
+                type="button"
+                class="toggle-password"
+                (click)="togglePasswordVisibility()"
+                tabindex="-1">
+                {{ showPassword ? 'visibility_off' : 'visibility' }}
+              </button>
+            </div>
+
+            @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+              <div class="error-message">
+                @if (loginForm.get('password')?.errors?.['required']) {
+                  <div>⚠️ Le mot de passe est requis</div>
+                }
+                @if (loginForm.get('password')?.errors?.['minlength']) {
+                  <div>⚠️ 8 caractères minimum requis</div>
+                }
+              </div>
+            }
+          </div>
+
+          <button
+            type="submit"
+            class="login-button"
+            [disabled]="!loginForm.valid || !selectedRole">
+            Connexion
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

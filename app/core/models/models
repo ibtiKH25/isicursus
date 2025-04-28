@@ -1,0 +1,62 @@
+// user.model.ts
+export interface User {
+  id: number;
+  login: string;
+  role: string;
+}
+
+// domain.model.ts
+export interface Domain {
+  id: number;
+  libelle: string;
+}
+
+// profile.model.ts
+export interface Profile {
+  id: number;
+  libelle: string;
+}
+
+// structure.model.ts
+export interface Structure {
+  id: number;
+  libelle: string;
+}
+
+// employer.model.ts
+export interface Employer {
+  id: number;
+  nomEmployeur: string;
+}
+
+// trainer.model.ts
+export interface Trainer {
+  id: number;
+  nom: string;
+  prenom: string;
+  email: string;
+  tel: string;
+  type: string;
+  employeur: Employer;
+}
+
+// training.model.ts
+export interface Training {
+  id: number;
+  titre: string;
+  annee: number;
+  duree: number;
+  domaine: Domain;
+  budget: number;
+}
+
+// participant.model.ts
+export interface Participant {
+  id: number;
+  nom: string;
+  prenom: string;
+  structure: Structure;
+  profile: Profile;
+  email: string;
+  tel: string;
+}

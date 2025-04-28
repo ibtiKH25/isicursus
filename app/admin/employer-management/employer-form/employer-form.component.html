@@ -1,0 +1,50 @@
+<div class="form-container">
+  <div class="form-column">
+    <div class="form-content">
+      <div class="header-section">
+        <h1 class="company-name">{{ isEditMode ? 'Modifier Employeur' : 'Ajouter Employeur' }}</h1>
+        <div class="divider"></div>
+      </div>
+
+      @if (errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <form [formGroup]="employeurForm" (ngSubmit)="onSubmit()" class="login-form">
+        <div class="form-group">
+          <label for="nomEmployeur">Nom Employeur</label>
+          <input
+            type="text"
+            id="nomEmployeur"
+            formControlName="nomEmployeur"
+            placeholder="Entrez le nom de l'employeur"
+            [class.invalid]="employeurForm.get('nomEmployeur')?.invalid && employeurForm.get('nomEmployeur')?.touched">
+
+          @if (employeurForm.get('nomEmployeur')?.touched && employeurForm.get('nomEmployeur')?.invalid) {
+            <div class="validation-error">
+              @if (employeurForm.get('nomEmployeur')?.errors?.['required']) {
+                <div>⚠️ Le nom est requis</div>
+              }
+              @if (employeurForm.get('nomEmployeur')?.errors?.['minlength']) {
+                <div>⚠️ Minimum 3 caractères requis</div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" (click)="onCancel()">Annuler</button>
+          <button type="submit" class="submit-btn" [disabled]="!employeurForm.valid || isSubmitting">
+            @if (isSubmitting) {
+              <span>En cours...</span>
+            } @else {
+              <span>{{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}</span>
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
