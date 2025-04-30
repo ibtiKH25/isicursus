@@ -1,1 +1,53 @@
-<p>structure-form works!</p>
+<div class="form-container">
+    <div class="form-column">
+      <div class="form-content">
+        <div class="header-section">
+          <h1 class="company-name">{{ isEditMode ? 'Modifier Structure' : 'Ajouter Structure' }}</h1>
+          <div class="divider"></div>
+        </div>
+  
+        @if (errorMessage) {
+          <div class="error-message">
+            {{ errorMessage }}
+          </div>
+        }
+  
+        <form [formGroup]="structureForm" (ngSubmit)="onSubmit()" class="login-form">
+          <div class="form-group">
+            <label for="libelle">Nom de la Structure</label>
+            <input
+              type="text"
+              id="libelle"
+              formControlName="libelle"
+              placeholder="Ex: Direction régionale Nord"
+              [class.invalid]="structureForm.get('libelle')?.invalid && structureForm.get('libelle')?.touched">
+  
+            @if (structureForm.get('libelle')?.touched && structureForm.get('libelle')?.invalid) {
+              <div class="validation-error">
+                @if (structureForm.get('libelle')?.errors?.['required']) {
+                  <div>⚠️ Le nom est requis</div>
+                }
+                @if (structureForm.get('libelle')?.errors?.['minlength']) {
+                  <div>⚠️ Minimum 3 caractères</div>
+                }
+                @if (structureForm.get('libelle')?.errors?.['maxlength']) {
+                  <div>⚠️ Maximum 50 caractères</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="onCancel()">Annuler</button>
+            <button type="submit" class="submit-btn" [disabled]="!structureForm.valid || isSubmitting">
+              @if (isSubmitting) {
+                <span>En cours...</span>
+              } @else {
+                <span>{{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

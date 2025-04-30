@@ -1,1 +1,71 @@
-<p>structure-list works!</p>
+<div class="structures-container">
+    @if (isLoading) {
+      <div class="loading">Chargement des structures...</div>
+    }
+  
+    @if (errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    }
+  
+    <div class="controls">
+      <div class="search-box">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="applySearch()"
+          placeholder="Rechercher une structure...">
+        <span class="material-icons">search</span>
+      </div>
+  
+      <button class="add-btn" (click)="addStructure()">
+        <span class="material-icons">add</span>
+        Ajouter Structure
+      </button>
+    </div>
+  
+    <h2>Liste des Structures</h2>
+  
+    @if (filteredStructures.length > 0) {
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Libellé</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (structure of paginatedStructures; track structure.id) {
+            <tr>
+              <td>{{ structure.id }}</td>
+              <td>{{ structure.libelle }}</td>
+              <td class="actions">
+                <button class="edit-btn" (click)="editStructure(structure)" title="Modifier">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="delete-btn" (click)="deleteStructure(structure)" title="Supprimer">
+                  <span class="material-icons">delete</span>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+  
+      @if (totalPages > 1) {
+        <div class="pagination">
+          <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+            &lt;
+          </button>
+          <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+          <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+            &gt;
+          </button>
+        </div>
+      }
+    } @else {
+      <div class="no-results">
+        Aucune structure trouvée
+      </div>
+    }
+  </div>

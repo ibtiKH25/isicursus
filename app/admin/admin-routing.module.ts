@@ -14,6 +14,8 @@ import { TrainerListComponent } from '../user/trainer-management/trainer-list/tr
 import { TrainingFormComponent } from '../user/training-management/training-form/training-form.component';
 import { TrainingListComponent } from '../user/training-management/training-list/training-list.component';
 import { TrainingDetailsComponent } from '../user/training-management/training-details/training-details.component';
+import { StructureFormComponent } from './structure-management/structure-form/structure-form.component';
+import { StructureListComponent } from './structure-management/structure-list/structure-list.component';
 
 
 const routes: Routes = [
@@ -35,7 +37,10 @@ const routes: Routes = [
       { path: 'training-form', component: TrainingFormComponent },
       { path: 'training-list', component: TrainingListComponent},
       { path: 'Training-details', component: TrainingDetailsComponent },
+      { path: 'structure-form', component:StructureFormComponent },
+      { path: 'structure-list', component:StructureListComponent },
     ]
+    
   }
 ];
 

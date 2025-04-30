@@ -16,6 +16,7 @@ interface Training {
   duree: number;
   idDomaine: number;
   budget: number;
+  domaine?: Domain; // Ajouté pour afficher le libellé du domaine
 }
 
 @Component({
@@ -32,6 +33,7 @@ export class TrainingFormComponent implements OnInit {
   isEditMode = false;
   trainingId: number | null = null;
   domains: Domain[] = [];
+  isLoadingDomains = true; // Nouveau: indicateur de chargement
 
   constructor(
     private fb: FormBuilder,
@@ -61,12 +63,16 @@ export class TrainingFormComponent implements OnInit {
   }
 
   loadDomains(): void {
-    this.http.get<Domain[]>('http://localhost:8080/api/domains').subscribe({
+    this.isLoadingDomains = true;
+    this.http.get<Domain[]>('http://localhost:8080/api/domaines').subscribe({
       next: (domains) => {
         this.domains = domains;
+        this.isLoadingDomains = false;
       },
       error: (err) => {
-        console.error('Error loading domains:', err);
+        console.error('Erreur lors du chargement des domaines:', err);
+        this.errorMessage = 'Impossible de charger la liste des domaines';
+        this.isLoadingDomains = false;
       }
     });
   }
@@ -85,14 +91,14 @@ export class TrainingFormComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.errorMessage = 'Error loading training';
+        this.errorMessage = 'Erreur lors du chargement de la formation';
         console.error('Error loading training:', err);
       }
     });
   }
 
   onSubmit(): void {
-    if (this.trainingForm.valid) {
+    if (this.trainingForm.valid && !this.isLoadingDomains) {
       this.isSubmitting = true;
       const trainingData = this.trainingForm.value;
 
@@ -126,11 +132,18 @@ export class TrainingFormComponent implements OnInit {
 
   handleError(error: any): void {
     this.isSubmitting = false;
-    this.errorMessage = 'An error occurred. Please try again.';
+    this.errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
     console.error(error);
   }
 
   onCancel(): void {
     this.navigateToList();
+  }
+
+  // Nouvelle méthode pour obtenir le libellé du domaine sélectionné
+  getSelectedDomainLabel(): string {
+    const id = this.trainingForm.get('idDomaine')?.value;
+    const domain = this.domains.find(d => d.id === id);
+    return domain ? domain.libelle : '';
   }
 }
